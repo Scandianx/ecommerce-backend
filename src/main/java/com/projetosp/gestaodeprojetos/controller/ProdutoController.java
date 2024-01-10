@@ -24,7 +24,7 @@ public class ProdutoController {
     @Autowired
    ProdutoRepository rep;
    @PostMapping()
-   public Produto adiocinarProduto(@RequestBody Produto produto) {
+   public Produto adicionarProduto(@RequestBody Produto produto) {
        
        return rep.save(produto);
    }

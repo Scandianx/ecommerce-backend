@@ -1,4 +1,4 @@
-package com.projetosp.gestaodeprojetos.model;
+package com.projetosp.gestaodeprojetos.security;
 
 public record AuthenticationDTO(String login, String password) {
 }

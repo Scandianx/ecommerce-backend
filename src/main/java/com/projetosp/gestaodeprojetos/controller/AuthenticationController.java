@@ -4,6 +4,9 @@ package com.projetosp.gestaodeprojetos.controller;
 
 import com.projetosp.gestaodeprojetos.model.Usuario;
 import com.projetosp.gestaodeprojetos.repository.UsuarioRepository;
+import com.projetosp.gestaodeprojetos.security.AuthenticationDTO;
+import com.projetosp.gestaodeprojetos.security.LoginResponseDTO;
+import com.projetosp.gestaodeprojetos.security.RegisterDTO;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.projetosp.gestaodeprojetos.model.LoginResponseDTO;
-import com.projetosp.gestaodeprojetos.model.AuthenticationDTO;
-import com.projetosp.gestaodeprojetos.model.RegisterDTO;
 import org.springframework.http.ResponseEntity;
 
 @RestController
@@ -44,7 +44,7 @@ public class AuthenticationController {
         if(this.repository.findByLogin(data.login()) != null) return new Usuario();
 
         String eP = new BCryptPasswordEncoder().encode(data.password());
-        Usuario newUser = new Usuario(data.nome(), data.login(), eP , data.role());
+        Usuario newUser = new Usuario(data.login(), eP , data.role());
 
         repository.save(newUser);
 

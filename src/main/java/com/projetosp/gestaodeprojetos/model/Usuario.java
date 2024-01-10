@@ -22,8 +22,6 @@ public class Usuario implements UserDetails{
 @Id
 @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_usuario")
 private Integer id;
-@Column(nullable=false)
-private String nome;
 @Column(nullable=false, unique = true)
 private String login;
 @Column(nullable=true)
@@ -33,8 +31,7 @@ private UsuarioRole role;
 public Usuario() {
 }
 
-public Usuario(String nome, String login, String password, UsuarioRole role) {
-    this.nome = nome;
+public Usuario(String login, String password, UsuarioRole role) {
     this.login = login;
     this.password = password;
     this.role= role;
@@ -43,9 +40,7 @@ public Usuario(String nome, String login, String password, UsuarioRole role) {
 public int getId() {
     return id;
 }
-public String getNome() {
-    return nome;
-}
+
 public String getEmail() {
     return login;
 }
@@ -55,9 +50,7 @@ public String getSenha() {
 public void setId(int id) {
     this.id = id;
 }
-public void setNome(String nome) {
-    this.nome = nome;
-}
+
 public void setEmail(String email) {
     this.login = email;
 }
@@ -79,7 +72,7 @@ public String getPassword() {
 @Override
 public String getUsername() {
     
-    return nome;
+    return login;
 }
 @Override
 public boolean isAccountNonExpired() {
