@@ -41,20 +41,15 @@ public int getId() {
     return id;
 }
 
-public String getEmail() {
-    return login;
-}
-public String getSenha() {
-    return password;
-}
+
 public void setId(int id) {
     this.id = id;
 }
 
-public void setEmail(String email) {
+public void setLogin(String email) {
     this.login = email;
 }
-public void setSenha(String password) {
+public void setPassword(String password) {
     this.password = password;
 }
 //IMPLEMENTACAO USERDATAILS
