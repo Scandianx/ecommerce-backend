@@ -7,7 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projetosp.gestaodeprojetos.model.Cliente;
+import com.projetosp.gestaodeprojetos.dtos.ClienteRequestDTO;
+import com.projetosp.gestaodeprojetos.dtos.ClienteResponseDTO;
+
 import com.projetosp.gestaodeprojetos.service.ClienteService;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,11 +24,11 @@ public class ClienteController {
     ClienteService service;
 
     @PostMapping()
-    public ResponseEntity<Cliente> criarCliente(@RequestBody Cliente cliente) {
+    public ResponseEntity<ClienteResponseDTO> criarCliente(@RequestBody ClienteRequestDTO cliente) {
         return ResponseEntity.ok(service.criarCliente(cliente));
     }
     @GetMapping()
-    public ResponseEntity<List<Cliente>> obterClientes() {
+    public ResponseEntity<List<ClienteResponseDTO>> obterClientes() {
         return ResponseEntity.ok(service.obterClientes());
     }
     

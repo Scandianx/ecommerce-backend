@@ -2,6 +2,8 @@ package com.projetosp.gestaodeprojetos.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projetosp.gestaodeprojetos.dtos.ProdutoRequestDTO;
+import com.projetosp.gestaodeprojetos.dtos.ProdutoResponseDTO;
 import com.projetosp.gestaodeprojetos.model.Produto;
 
 import com.projetosp.gestaodeprojetos.service.ProdutoService;
@@ -29,7 +31,7 @@ public class ProdutoController {
     @Autowired
     ProdutoService service;
     @PostMapping()
-    public ResponseEntity<Produto> adicionarProduto(@RequestBody Produto produto) {
+    public ResponseEntity<ProdutoResponseDTO> adicionarProduto(@RequestBody ProdutoRequestDTO produto) {
        
        return ResponseEntity.ok(service.adicionarProduto(produto));
    }

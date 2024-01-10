@@ -1,4 +1,4 @@
-package com.projetosp.gestaodeprojetos.model;
+package com.projetosp.gestaodeprojetos.dtos;
 
 import java.util.List;
 

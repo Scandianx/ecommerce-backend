@@ -11,12 +11,13 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.web.server.ResponseStatusException;
 
+import com.projetosp.gestaodeprojetos.dtos.ClientePedidoResponseDTO;
+import com.projetosp.gestaodeprojetos.dtos.ItemPedidoResponseDTO;
+import com.projetosp.gestaodeprojetos.dtos.PedidoRequestDTO;
+import com.projetosp.gestaodeprojetos.dtos.PedidoResponseDTO;
 import com.projetosp.gestaodeprojetos.model.Cliente;
 import com.projetosp.gestaodeprojetos.model.ItemPedido;
-import com.projetosp.gestaodeprojetos.model.ItemPedidoResponseDTO;
 import com.projetosp.gestaodeprojetos.model.Pedido;
-import com.projetosp.gestaodeprojetos.model.PedidoRequestDTO;
-import com.projetosp.gestaodeprojetos.model.PedidoResponseDTO;
 import com.projetosp.gestaodeprojetos.model.Produto;
 import com.projetosp.gestaodeprojetos.repository.ClienteRepository;
 import com.projetosp.gestaodeprojetos.repository.ItemPedidoRepository;
@@ -34,32 +35,7 @@ public class PedidoService {
     @Autowired
     ProdutoRepository repProduto;
 
-    public Pedido adicionarPedidoCliente(Pedido pedido) {
-        Pedido p1 = pedido;
-
-        Cliente c1 = new Cliente();
-        c1 = p1.getCliente();
-        List<Pedido> listaDePedidos = new ArrayList<>();
-        listaDePedidos.add(p1);
-        c1.setPedidos(listaDePedidos);
-        c1 = repCliente.save(c1);
-        p1.setCliente(c1);
-
-        List<ItemPedido> listaDeIp = new ArrayList<>();
-        for (ItemPedido ip : pedido.getItempedidos()) {
-            Produto z1 = ip.getProduto();
-            listaDeIp.add(ip);
-            z1.setItempedidos(listaDeIp);
-            z1 = repProduto.save(z1);
-            p1 = rep.save(p1);
-            ip.setPedido(p1);
-            ip.setProduto(z1);
-            repIP.save(ip);
-
-        }
-
-        return p1;
-    }
+    
 
     public PedidoResponseDTO criarPedido(PedidoRequestDTO pedido) {
         double precoTotal = 0;
@@ -126,11 +102,17 @@ public class PedidoService {
                     ip.getProduto().getValorVenda(),
                     ip.getDescontoUnitario() + "%", ip.getQuantidade()));
         }
-        return new PedidoResponseDTO(cliente, data, lista, desconto, valorTotal);
+        return new PedidoResponseDTO(new ClientePedidoResponseDTO(cliente.getNome(), cliente.getTelefone(), cliente.getEmail(),
+         cliente.getCpf(), cliente.getEndereço()), data, lista, desconto, valorTotal);
 
     }
 
-    public List<Pedido> obterTodosPedidos() {
-        return rep.findAll();
+    public List<PedidoResponseDTO> obterTodosPedidos() {
+        List<Pedido> listaDePedidos = rep.findAll();
+        List<PedidoResponseDTO> listaDePedidosDTO = new ArrayList<>();
+        for (Pedido pedido: listaDePedidos){
+            listaDePedidosDTO.add(criarResponsePedido(pedido));
+        }
+        return listaDePedidosDTO;
     }
 }
