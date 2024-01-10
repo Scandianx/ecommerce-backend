@@ -20,9 +20,9 @@ public class ItemPedido {
     @Column(nullable=false)
     private Integer quantidade;
     @Column(nullable=false)
-    private Integer preçoFinal;
+    private Double preçoFinal;
     @Column(nullable=true)
-    private Integer descontoUnitario;
+    private Double descontoUnitario;
     @ManyToOne
     @JoinColumn(name="pedido_id")
     @JsonBackReference(value="ip")
@@ -39,16 +39,16 @@ public class ItemPedido {
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
-    public Integer getPreçoFinal() {
+    public Double getPreçoFinal() {
         return preçoFinal;
     }
-    public void setPreçoFinal(Integer preçoFinal) {
+    public void setPreçoFinal(Double preçoFinal) {
         this.preçoFinal = preçoFinal;
     }
-    public Integer getDescontoUnitario() {
+    public Double getDescontoUnitario() {
         return descontoUnitario;
     }
-    public void setDescontoUnitario(Integer descontoUnitario) {
+    public void setDescontoUnitario(Double descontoUnitario) {
         this.descontoUnitario = descontoUnitario;
     }
     public Pedido getPedido() {
@@ -60,7 +60,7 @@ public class ItemPedido {
     public Produto getProduto() {
         return produto;
     }
-    public ItemPedido(Integer quantidade, Integer preçoFinal, Integer descontoUnitario) {
+    public ItemPedido(Integer quantidade, Double preçoFinal, Double descontoUnitario) {
         this.quantidade = quantidade;
         this.preçoFinal = preçoFinal;
         this.descontoUnitario = descontoUnitario;
@@ -74,7 +74,7 @@ public class ItemPedido {
     @JoinColumn(name="produto_id")
     @JsonBackReference(value="product")
     private Produto produto;
-    public ItemPedido(Integer quantidade, Integer preçoFinal, Integer descontoUnitario, Pedido pedido,
+    public ItemPedido(Integer quantidade, Double preçoFinal, Double descontoUnitario, Pedido pedido,
             Produto produto) {
         this.quantidade = quantidade;
         this.preçoFinal = preçoFinal;
@@ -82,7 +82,7 @@ public class ItemPedido {
         this.pedido = pedido;
         this.produto = produto;
     }
-    public ItemPedido(Integer quantidade, Integer preçoFinal, Integer descontoUnitario, Produto produto) {
+    public ItemPedido(Integer quantidade, Double preçoFinal, Double descontoUnitario, Produto produto) {
         this.quantidade = quantidade;
         this.preçoFinal = preçoFinal;
         this.descontoUnitario = descontoUnitario;

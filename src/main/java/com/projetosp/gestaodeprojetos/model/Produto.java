@@ -14,21 +14,27 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(name= "generator_prod", sequenceName="sequence_prod", initialValue= 1, allocationSize= 1)
+@SequenceGenerator(name = "generator_prod", sequenceName = "sequence_prod", initialValue = 1, allocationSize = 1)
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_prod")
     private Integer id;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String nome;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private Integer estoque;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private Integer valorCusto;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private Integer valorVenda;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private Date dataDeCadastro;
+    @Column(nullable = true)
+    private String observação;
+    @OneToMany(mappedBy = "produto")
+    @JsonManagedReference(value = "product")
+    private List<ItemPedido> Itempedidos;
+
     public List<ItemPedido> getItempedidos() {
         return Itempedidos;
     }
@@ -36,12 +42,6 @@ public class Produto {
     public void setItempedidos(List<ItemPedido> itempedidos) {
         Itempedidos = itempedidos;
     }
-
-    @Column(nullable=true)
-    private String observação;
-    @OneToMany(mappedBy="produto")
-    @JsonManagedReference(value="product")
-    private List<ItemPedido> Itempedidos;
 
     public Integer getId() {
         return id;
@@ -51,13 +51,9 @@ public class Produto {
         return nome;
     }
 
-    
-
     public void setId(Integer id) {
         this.id = id;
     }
-
-    
 
     public Produto(String nome, Integer estoque, Integer valorCusto, Integer valorVenda, Date dataDeCadastro) {
         this.nome = nome;
@@ -104,8 +100,6 @@ public class Produto {
     public Produto() {
     }
 
-    
-
     public Integer getEstoque() {
         return estoque;
     }
@@ -126,8 +120,4 @@ public class Produto {
         return observação;
     }
 
-    
-
-    
-    
 }
