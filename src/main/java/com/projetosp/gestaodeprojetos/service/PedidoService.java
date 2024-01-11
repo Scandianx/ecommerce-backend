@@ -34,6 +34,8 @@ public class PedidoService {
     ClienteRepository repCliente;
     @Autowired
     ProdutoRepository repProduto;
+    @Autowired
+    EmailSenderService senderService;
 
     
 
@@ -87,7 +89,8 @@ public class PedidoService {
             ip.setPedido(newPedido);
             repIP.save(ip);
         }
-
+        String emailBody= "Olá " + newPedido.getCliente().getNome()+ " seu novo pedido foi criado";
+        senderService.sendEmail(newPedido.getCliente().getEmail(),"Seu pedido foi criado!", emailBody);
         return criarResponsePedido(newPedido);
     }
 
@@ -114,5 +117,15 @@ public class PedidoService {
             listaDePedidosDTO.add(criarResponsePedido(pedido));
         }
         return listaDePedidosDTO;
+    }
+    public void deletarPedido(Integer id) {
+        Optional<Pedido> pedidoOptional = rep.findById(id);
+
+        if (pedidoOptional.isPresent()) {
+            Pedido pedido = pedidoOptional.get();
+            rep.delete(pedido);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não encontrado");
+        }
     }
 }

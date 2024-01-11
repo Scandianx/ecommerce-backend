@@ -1,6 +1,5 @@
 package com.projetosp.gestaodeprojetos.controller;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,31 +14,34 @@ import com.projetosp.gestaodeprojetos.dtos.PedidoResponseDTO;
 
 import com.projetosp.gestaodeprojetos.service.PedidoService;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-
-
-
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("pedido")
 public class PedidoController {
-    
-   @Autowired
-   private PedidoService pedidoService;
-   
 
-   @PostMapping("/criar")
-   public ResponseEntity<PedidoResponseDTO> adiocinarPedidoClienteDTO(@RequestBody PedidoRequestDTO pedido) {
-    var ped= pedidoService.criarPedido(pedido);
-    return ResponseEntity.ok().body(ped);
+    @Autowired
+    private PedidoService pedidoService;
 
-   }
+    @PostMapping("/criar")
+    public ResponseEntity<PedidoResponseDTO> adiocinarPedidoClienteDTO(@RequestBody PedidoRequestDTO pedido) {
+        var ped = pedidoService.criarPedido(pedido);
+        return ResponseEntity.ok().body(ped);
 
-   
-   @GetMapping()
-   public ResponseEntity<List<PedidoResponseDTO>> obterTodosPedidos() {
-       var ped= pedidoService.obterTodosPedidos();
-       return ResponseEntity.ok().body(ped);
-   }
-   
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<PedidoResponseDTO>> obterTodosPedidos() {
+        var ped = pedidoService.obterTodosPedidos();
+        return ResponseEntity.ok().body(ped);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletarPedido(@PathVariable Integer id) {
+        pedidoService.deletarPedido(id);
+        return ResponseEntity.ok("Pedido deletado com sucesso");
+    }
+
 }
